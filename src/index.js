@@ -1,3 +1,6 @@
 require(["jquery", "react", "js/inner"], function ($, React, inner) {
-	console.log($, React, inner);
+	React.render(
+        <div>hello world!!</div>,
+        document.body
+    );
 });
