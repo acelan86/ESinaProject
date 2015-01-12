@@ -1,15 +1,5 @@
 var gutil = require("gulp-util");
 var gulp = require("gulp");
-var revall = require("gulp-rev-all");
-var clean = require("gulp-clean");
-var mainBowerFiles = require('main-bower-files');
-var connect = require("gulp-connect");
-var usemin = require("gulp-usemin");
-var gulpFilter = require("gulp-filter");
-var uglify = require("gulp-uglify");
-var jsx = require("gulp-react");
-var imagemin = require("gulp-imagemin");
-var jshint = require("gulp-jshint");
 
 var paths = {
     src: "src",
@@ -24,6 +14,8 @@ var port = 8888;
  * tools
  */
 gulp.task("connect", function () {
+    var connect = require("gulp-connect");
+    
     connect.server({
         port: port
     });
@@ -33,18 +25,24 @@ gulp.task("connect", function () {
  * some clean
  */
 gulp.task("clean_dev", function () {
+    var clean = require("gulp-clean");
+
     return gulp.src(paths.dev, {read: false})
         .pipe(clean({
             force: true 
         }));
 });
 gulp.task("clean_tmp", function () {
+    var clean = require("gulp-clean");
+
     return gulp.src(paths.tmp, {read: false})
         .pipe(clean({
             force: true 
         }));
 });
 gulp.task("clean_dist", function () {
+    var clean = require("gulp-clean");
+
     return gulp.src(paths.dist, {read: false})
         .pipe(clean({
             force: true 
@@ -65,6 +63,8 @@ gulp.task("src2dev", ["clean_dev"], function () {
 });
 //2. bower/files -> dev/lib
 gulp.task("bower", ["src2dev"], function () {
+    var mainBowerFiles = require("main-bower-files");
+
     return gulp.src(mainBowerFiles({
             includeDev: true
         }))
@@ -72,6 +72,10 @@ gulp.task("bower", ["src2dev"], function () {
 });
 //3. compile  [react, cssgrace]  dev -> dev
 gulp.task("compile", ["bower"], function () {
+    var jsx = require("gulp-react");
+
+    var jshint = require("gulp-jshint");
+
     return gulp.src(paths.dev + "/**/*.js")
         .pipe(jsx({
             harmony: true
@@ -97,6 +101,8 @@ gulp.task("dev2tmp", ["clean_dist", "clean_tmp"], function () {
 
 //2. usemin concat files  tmp -> tmp
 gulp.task("usemin", ["dev2tmp"], function () {
+    var usemin = require("gulp-usemin");
+
     return gulp.src(paths.tmp + "/**/*.html")
         .pipe(usemin())
         .pipe(gulp.dest(paths.tmp));
@@ -104,6 +110,8 @@ gulp.task("usemin", ["dev2tmp"], function () {
 
 //3. optimizes tmp -> tmp
 gulp.task("optimize_image", ["usemin"], function () {
+    var imagemin = require("gulp-imagemin");
+
     return gulp.src(paths.tmp + "/**/*.{jpg,gif,jpeg,png}")
         .pipe(imagemin({
             optimizationLevel: 5,
@@ -113,6 +121,8 @@ gulp.task("optimize_image", ["usemin"], function () {
         .pipe(gulp.dest(paths.tmp));
 });
 gulp.task("optimize_js", ["usemin"], function () {
+    var uglify = require("gulp-uglify");
+
     return gulp.src(paths.tmp + "/**/*.js")
         .pipe(uglify())
         .pipe(gulp.dest(paths.tmp));
@@ -120,6 +130,8 @@ gulp.task("optimize_js", ["usemin"], function () {
 
 //3. reval md5 files  tmp -> dist
 gulp.task("rev", ["optimize_image", "optimize_js"], function () {
+    var revall = require("gulp-rev-all");
+
     return gulp.src(paths.tmp + "/**")
         .pipe(revall({
             ignore: ['.html']
@@ -133,6 +145,8 @@ gulp.task("rev", ["optimize_image", "optimize_js"], function () {
 
 //4. clean tmp
 gulp.task("package", ["rev"], function () {
+    var clean = require("gulp-clean");
+
     return gulp.src(paths.tmp, {read: false})
         .pipe(clean({
             force: true

@@ -18,7 +18,6 @@
     "gulp-useref": "^1.1.1",
     "gulp-util": "^3.0.2",
     "jshint": "^2.5.11",
-    "main-bower-files": "^2.4.1",
-    "q": "^1.1.2"
+    "main-bower-files": "^2.4.1"
   }
 }
