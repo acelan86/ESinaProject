@@ -1,4 +1,8 @@
-define(["jquery", "js/inner2"], function ($, inner2) {
+define([
+    "jquery",
+    "js/inner2",
+    "css!styles/inner"
+], function ($, inner2) {
 	return {
 		$ : $,
 		inner2: inner2

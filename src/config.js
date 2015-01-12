@@ -4,7 +4,7 @@ requirejs.config({
         react: "lib/react",
         jquery: "lib/jquery"
     },
-    "shim": {
+    shim: {
         "jquery" : {
             "exports": "$"
         }
