@@ -1,4 +1,8 @@
-html, body {
+html, body{
+    margin: 0;
+    padding: 0;
+}
+#container {
     height: 100%;
     background: url(../image/logo-jquery@2x.png) no-repeat left top #ccc;
 }
