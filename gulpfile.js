@@ -133,9 +133,12 @@ gulp.task("rev", ["optimize_image", "optimize_js"], function () {
 
     return gulp.src(paths.tmp + "/**")
         .pipe(revall({
-            ignore: ['.html']
-            ,silent: true
-            ,prefix: "http://localhost:8888/dist"
+            ignore: ['.html'],
+            silent: true,
+            prefix: "http://localhost:8888/dist",
+            transformPath: function (newPath) {
+                return newPath.replace(/[a-z0-9]+!/, '');
+            }
         }))
         .pipe(gulp.dest(paths.dist))
         .pipe(revall.manifest())
