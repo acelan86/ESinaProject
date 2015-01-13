@@ -135,10 +135,7 @@ gulp.task("rev", ["optimize_image", "optimize_js"], function () {
         .pipe(revall({
             ignore: ['.html'],
             silent: true,
-            prefix: "http://localhost:8888/dist",
-            transformPath: function (newPath) {
-                return newPath.replace(/[a-z0-9]+!/, '');
-            }
+            prefix: "http://localhost:8888/dist"
         }))
         .pipe(gulp.dest(paths.dist))
         .pipe(revall.manifest())
