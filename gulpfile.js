@@ -73,7 +73,6 @@ gulp.task("bower", ["src2dev"], function () {
 //3. compile  [react, cssgrace]  dev -> dev
 gulp.task("compile", ["bower"], function () {
     var jsx = require("gulp-react");
-
     var jshint = require("gulp-jshint");
 
     return gulp.src(paths.dev + "/**/*.js")

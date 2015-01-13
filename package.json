@@ -2,6 +2,10 @@
   "name": "esina-project",
   "version": "0.1.0",
   "author": "acelan",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/acelan86/ESinaProject.git"
+  },
   "devDependencies": {
     "cssgrace": "git://github.com/acelan86/cssgrace.git#master",
     "gulp": "^3.8.10",
@@ -14,7 +18,7 @@
     "gulp-react": "^2.0.0",
     "gulp-rev-all": "git://github.com/acelan86/gulp-rev-all.git#master",
     "gulp-uglify": "^1.0.2",
-    "gulp-usemin": "^0.3.8",
+    "gulp-usemin": "^0.3.9",
     "gulp-useref": "^1.1.1",
     "gulp-util": "^3.0.2",
     "jshint": "^2.5.11",
