@@ -18,7 +18,7 @@
     "gulp-react": "^2.0.0",
     "gulp-rev-all": "git://github.com/acelan86/gulp-rev-all.git#master",
     "gulp-uglify": "^1.0.2",
-    "gulp-usemin": "0.3.8",
+    "gulp-usemin": "^0.3.11",
     "gulp-useref": "^1.1.1",
     "gulp-util": "^3.0.2",
     "jshint": "^2.5.11",
