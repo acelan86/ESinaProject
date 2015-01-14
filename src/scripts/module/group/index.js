@@ -23,7 +23,8 @@ define([
         }
     })
 
-    return function() {
+    return function (params) {
+        console.log(params);
         //模拟数据
         var hc = new App.Collections.Group();
         hc.add([

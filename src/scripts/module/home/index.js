@@ -20,11 +20,12 @@ define(["backbone"], function (Backbone) {
         }
     })
 
-    return function() {
+    return function (params) {
+        console.log(params);
         //模拟数据
         var hc = new App.Collections.Home();
         hc.add([
-            {'name': 'home', 'link': '#home/index~a:moduleA/other:nothing'},
+            {'name': 'home', 'link': '#home/index/a:moduleA/other:nothing'},
             {'name': 'group', 'link': '#group/index'}
         ]);
         new App.Views.Home(hc);

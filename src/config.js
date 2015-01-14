@@ -4,12 +4,7 @@ requirejs.config({
         react: "lib/react",
         jquery: "lib/jquery",
         backbone: "lib/backbone",
-        underscore: "lib/underscore",
-
-
-        //routers
-        "home/index" : "js/module/home/index",
-        "group/index" : "js/module/group/index"
+        underscore: "lib/underscore"
     },
     shim: {
         jquery : {
@@ -27,5 +22,13 @@ requirejs.config({
         "*": {
             css: "lib/css"
         }
+    }
+});
+
+requirejs.config({
+    paths: {
+        //routers
+        "home/index" : "scripts/module/home/index",
+        "group/index" : "scripts/module/group/index"
     }
 });
