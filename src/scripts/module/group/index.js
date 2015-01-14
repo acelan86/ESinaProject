@@ -17,7 +17,7 @@ define([
         render: function() {
             var html = '';
             this.Collections.each(function (m) {
-                html += '<div><a href="' + m.get('link') + '">' + m.get('name') + '</a></div>';
+                html += '<div><a href="' + m.get('link') + '"' + (m.get("blank") ? 'target="_blank"' : '') + '>' + m.get('name') + '</a></div>';
             });
             this.$el.html(html);
         }
@@ -28,8 +28,8 @@ define([
         //模拟数据
         var hc = new App.Collections.Group();
         hc.add([
-            {'name': 'baidu', 'link': 'http://baidu.com'},
-            {'name': "return home", "link": "#home/index"}
+            {'name': 'baidu', 'link': 'http://baidu.com', 'blank': true},
+            {'name': "return home", "link": "#home/index/id:11111"}
         ]);
         new App.Views.Group(hc);
     }

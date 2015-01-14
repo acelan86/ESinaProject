@@ -9,7 +9,12 @@
         <div id="container"></div>
         <!-- build:js boot.js -->
         <script src="config.js"></script>
-        <script src="main.js"></script>
+        <script src="routers.js"></script>
         <!-- endbuild -->
+        <script>
+            require(["app"], function (app) {
+                app.run();
+            });
+        </script>
     </body>
 </html>

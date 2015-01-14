@@ -1,3 +1,7 @@
+/**
+ * 根据自动路由表转换成模块加载
+ * 并且启动app
+ */
 define([
     "require",
     "backbone"

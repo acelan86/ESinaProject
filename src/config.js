@@ -1,3 +1,6 @@
+/**
+ * require全局配置项
+ */
 requirejs.config({
     baseUrl: "./",
     paths: {
@@ -22,13 +25,5 @@ requirejs.config({
         "*": {
             css: "lib/css"
         }
-    }
-});
-
-requirejs.config({
-    paths: {
-        //routers
-        "home/index" : "scripts/module/home/index",
-        "group/index" : "scripts/module/group/index"
     }
 });
