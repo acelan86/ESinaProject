@@ -21,16 +21,11 @@ gulp.task("connect", function () {
     });
 });
 
+gulp.task("bowerinstall", function () {
+    var bower = require("gulp-bower");
 
-gulp.task('bower_test', function () {
-    var lib    = require('bower-files')();
-
-    console.log(lib.files);
-
-    gulp.src(lib.ext('js').files)
-        .pipe(gulp.dest('src/bower'));
+    return bower();
 });
-
 /**
  * some clean
  */
@@ -71,8 +66,9 @@ gulp.task("src2dev", ["clean_dev"], function () {
     return gulp.src(paths.src + "/**/*")
         .pipe(gulp.dest(paths.dev));
 });
+
 //2. bower/files -> dev/lib
-gulp.task("bower", ["src2dev"], function () {
+gulp.task("bower", ["src2dev", "bowerinstall"], function () {
     var mainBowerFiles = require("main-bower-files");
 
     return gulp.src(mainBowerFiles({

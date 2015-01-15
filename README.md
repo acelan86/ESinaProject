@@ -1,13 +1,12 @@
 # ESinaProject
-make a project 
+
+## get 
 
 git clone https://github.com/acelan86/ESinaProject
 
 npm install
 
-bower install
-
-
+## use
 
 gulp clean
 
