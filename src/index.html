@@ -7,14 +7,15 @@
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="format-detection" content="telephone=no" />
     <link type="text/css" rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="styles/google-bootstrap.css" />
 </head>
 <body>
     <i class="glyphicon glyphicon-heart"></i>
     <i class="glyphicon glyphicon-heart-empty"></i>
     <div id="Main" class="main"></div>
     <!--[if lt IE 9]>
-        <script>
-          (function(){
+    <script>
+        (function(){
             var noop = function () {};
             window.console = window.console || {
                 log: noop,
@@ -22,13 +23,10 @@
                 error: noop,
                 dir: noop
             };
-          }());
-        </script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv-printshiv.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/3.4.0/es5-shim.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/3.4.0/es5-sham.js"></script>
+        }());
+    </script>
+    <script src="lib/html5shiv/html5shiv.js"></script>
+    <script src="lib/es5-shim/es5-shim.js"></script>
     <![endif]-->
     <!-- build:js boot.js -->
     <script src="lib/requirejs/require.js"></script>
