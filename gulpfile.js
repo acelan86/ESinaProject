@@ -21,6 +21,16 @@ gulp.task("connect", function () {
     });
 });
 
+
+gulp.task('bower_test', function () {
+    var lib    = require('bower-files')();
+
+    console.log(lib.files);
+
+    gulp.src(lib.ext('js').files)
+        .pipe(gulp.dest('src/bower'));
+});
+
 /**
  * some clean
  */
