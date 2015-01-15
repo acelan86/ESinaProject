@@ -1,9 +1,18 @@
 # ESinaProject
 make a project 
 
+git clone https://github.com/acelan86/ESinaProject
+
 npm install
+
 bower install
 
-gulp bower
 
-gulp
+
+gulp clean
+
+gulp compile
+
+gulp package
+
+gulp connect
