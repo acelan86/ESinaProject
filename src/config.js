@@ -4,10 +4,10 @@
 requirejs.config({
     baseUrl: "./",
     paths: {
-        react: "lib/react",
-        jquery: "lib/jquery",
-        backbone: "lib/backbone",
-        underscore: "lib/underscore"
+        react: "lib/react/react",
+        jquery: "lib/jquery/dist/jquery",
+        backbone: "lib/backbone/backbone",
+        underscore: "lib/underscore/underscore"
     },
     shim: {
         jquery : {
@@ -23,7 +23,7 @@ requirejs.config({
     },
     map: {
         "*": {
-            css: "lib/css"
+            css: "lib/require-css/css"
         }
     }
 });

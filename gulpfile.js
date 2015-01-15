@@ -80,7 +80,8 @@ gulp.task("bower", ["src2dev", "bowerinstall"], function () {
             base: "./bower_components"  //don't remove
         })
         .pipe(bowerNormalizer({
-            //useExtnameFolder: true   //是否将文件按照扩展名存放到对应文件夹下，默认为false
+            // flat: true,
+            // useExtnameFolder: true   //是否将文件按照扩展名存放到对应文件夹下，默认为false
             //bowerJson: "./bower.json"
         }))
         .pipe(gulp.dest(paths.dev + "/lib"));
