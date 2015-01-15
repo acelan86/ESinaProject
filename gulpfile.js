@@ -13,6 +13,8 @@ var port = 8888;
 /**
  * tools
  */
+
+
 gulp.task("connect", function () {
     var connect = require("gulp-connect");
     
@@ -70,12 +72,20 @@ gulp.task("src2dev", ["clean_dev"], function () {
 //2. bower/files -> dev/lib
 gulp.task("bower", ["src2dev", "bowerinstall"], function () {
     var mainBowerFiles = require("main-bower-files");
+    var bowerNormalizer = require('gulp-bower-normalize');
 
     return gulp.src(mainBowerFiles({
             includeDev: true
+        }), {
+            base: "./bower_components"  //don't remove
+        })
+        .pipe(bowerNormalizer({
+            //useExtnameFolder: true   //是否将文件按照扩展名存放到对应文件夹下，默认为false
+            //bowerJson: "./bower.json"
         }))
         .pipe(gulp.dest(paths.dev + "/lib"));
 });
+
 //3. compile  [react, cssgrace]  dev -> dev
 gulp.task("compile", ["bower"], function () {
     var jsx = require("gulp-react");

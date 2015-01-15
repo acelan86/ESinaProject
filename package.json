@@ -10,6 +10,7 @@
     "cssgrace": "git://github.com/acelan86/cssgrace.git#master",
     "gulp": "^3.8.10",
     "gulp-bower": "0.0.10",
+    "gulp-bower-normalize": "git://github.com/acelan86/gulp-bower-normalize.git#master",
     "gulp-bower-src": "^0.1.0",
     "gulp-clean": "^0.3.1",
     "gulp-connect": "^2.2.0",
