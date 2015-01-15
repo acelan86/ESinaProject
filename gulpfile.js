@@ -156,4 +156,6 @@ gulp.task("package", ["rev"], function () {
 /**
  * alias
  */
-gulp.task("default", ["dev"]);
+gulp.task("default", ["compile"], function () {
+    //gulp.watch(["src/**"], ["compile"]);
+});

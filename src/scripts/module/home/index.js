@@ -6,7 +6,7 @@ define(["backbone"], function (Backbone) {
     });
 
     App.Views.Home = Backbone.View.extend({
-        el: '#container',
+        el: '#Main',
         initialize: function(c) {
             this.Collections = c;
             this.render();

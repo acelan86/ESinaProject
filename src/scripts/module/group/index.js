@@ -1,36 +1,57 @@
 define([
     "backbone",
+    "react",
+    "lib/UINav/UINav",
     "css!styles/group"
-], function (Backbone) {
-    App.Models.Group = Backbone.Model.extend({});
+], function (Backbone, React, UINav) {
 
-    App.Collections.Group = Backbone.Collection.extend({
-        model: App.Models.Group
+    App.Models.Item = Backbone.Model.extend({});
+
+    App.Collections.Items = Backbone.Collection.extend({
+        model: App.Models.Item
     });
+    
 
     App.Views.Group = Backbone.View.extend({
-        el: '#container',
-        initialize: function (c) {
-            this.Collections = c;
+        el: '#Main',
+        initialize: function (items) {
+            this.items = items;
             this.render();
         },
+        addHandler: function () {
+            //alert('add');
+            this.items.add([
+                {
+                    name: 'item' + (+new Date()).toString(36)
+                    //link: '#home/index/a:1/b:2'
+                }
+            ]);
+        },
+        removeHandler: function (cid) {
+            //alert('add');
+            this.items.remove(cid);
+        },
         render: function() {
-            var html = '';
-            this.Collections.each(function (m) {
-                html += '<div><a href="' + m.get('link') + '"' + (m.get("blank") ? 'target="_blank"' : '') + '>' + m.get('name') + '</a></div>';
-            });
-            this.$el.html(html);
+            React.render(
+                <UINav 
+                    onadd={$.proxy(this.addHandler, this)} 
+                    onremove={$.proxy(this.removeHandler, this)} 
+                    items={this.items} />,
+                this.el
+            );
         }
     })
 
     return function (params) {
         console.log(params);
         //模拟数据
-        var hc = new App.Collections.Group();
-        hc.add([
-            {'name': 'baidu', 'link': 'http://baidu.com', 'blank': true},
-            {'name': "return home", "link": "#home/index/id:11111"}
+        var items = new App.Collections.Items([
+            {
+                name: 'add'
+                //link: 'http://baidu.com',
+                //blank: true
+            }
         ]);
-        new App.Views.Group(hc);
+        new App.Views.Group(items);
     }
 });
