@@ -9,7 +9,9 @@
     "require-css": "~0.1.8",
     "backbone": "~1.1.2",
     "bootstrap": "~3.3.1",
-    "pure": "~0.5.0"
+    "pure": "~0.5.0",
+    "react-bootstrap": "~0.13.2",
+    "es5-shim": "~4.0.5"
   },
   "license": "MIT",
   "ignore": [

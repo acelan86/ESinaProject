@@ -12,6 +12,24 @@
     <i class="glyphicon glyphicon-heart"></i>
     <i class="glyphicon glyphicon-heart-empty"></i>
     <div id="Main" class="main"></div>
+    <!--[if lt IE 9]>
+        <script>
+          (function(){
+            var noop = function () {};
+            window.console = window.console || {
+                log: noop,
+                warn: noop,
+                error: noop,
+                dir: noop
+            };
+          }());
+        </script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv-printshiv.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/3.4.0/es5-shim.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/3.4.0/es5-sham.js"></script>
+    <![endif]-->
     <!-- build:js boot.js -->
     <script src="lib/requirejs/require.js"></script>
     <script src="config.js"></script>
