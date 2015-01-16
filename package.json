@@ -7,10 +7,10 @@
     "url": "http://github.com/acelan86/ESinaProject.git"
   },
   "devDependencies": {
-    "cssgrace": "git://github.com/acelan86/cssgrace.git#master",
+    "cssgrace": "git://github.com/acelan86/cssgrace.git",
     "gulp": "^3.8.10",
     "gulp-bower": "0.0.10",
-    "gulp-bower-normalize": "git://github.com/acelan86/gulp-bower-normalize.git#master",
+    "gulp-bower-normalize": "git://github.com/acelan86/gulp-bower-normalize.git",
     "gulp-bower-src": "^0.1.0",
     "gulp-clean": "^0.3.1",
     "gulp-connect": "^2.2.0",
@@ -18,7 +18,7 @@
     "gulp-imagemin": "^2.1.0",
     "gulp-jshint": "^1.9.0",
     "gulp-react": "^2.0.0",
-    "gulp-rev-all": "git://github.com/acelan86/gulp-rev-all.git#master",
+    "gulp-rev-all": "git://github.com/acelan86/gulp-rev-all.git",
     "gulp-uglify": "^1.0.2",
     "gulp-usemin": "^0.3.11",
     "gulp-util": "^3.0.2",

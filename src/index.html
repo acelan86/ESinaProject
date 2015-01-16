@@ -3,16 +3,19 @@
 <head>
     <meta charset="utf-8" />
     <title> ESinaProject Title </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="format-detection" content="telephone=no" />
-    <link type="text/css" rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
-    <link type="text/css" rel="stylesheet" href="styles/google-bootstrap.css" />
+    <!-- build:css lib/bootstrap/dist/css/app.css -->
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/todc-bootstrap.css" />
+    <!-- endbuild -->
 </head>
 <body>
     <i class="glyphicon glyphicon-heart"></i>
     <i class="glyphicon glyphicon-heart-empty"></i>
-    <div id="Main" class="main"></div>
+    <div class="main" id="Main"></div>
     <!--[if lt IE 9]>
     <script>
         (function(){
@@ -25,7 +28,7 @@
             };
         }());
     </script>
-    <script src="lib/html5shiv/html5shiv.js"></script>
+    <script src="lib/html5shiv/dist/html5shiv.js"></script>
     <script src="lib/es5-shim/es5-shim.js"></script>
     <![endif]-->
     <!-- build:js boot.js -->

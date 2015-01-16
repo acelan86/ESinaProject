@@ -20,7 +20,8 @@ requirejs.config({
         },
         underscore: {
             exports: '_'
-        }
+        },
+        "react-bootstrap": ["react"]
     },
     map: {
         "*": {
