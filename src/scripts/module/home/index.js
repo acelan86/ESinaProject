@@ -67,6 +67,7 @@ define(["backbone", "react", "react-bootstrap"], function (Backbone, React, Reac
         render: function() {
             React.render(
                 <div>
+                    <a href="#group/index/j:1/k:2/c:abc/d:[xyz,abc]">group</a>
                     <Button bsStyle="primary">Default button</Button>
                     <Button>Default button</Button>
                     <Alert bsStyle="warning">

@@ -22,7 +22,7 @@ define([
             //将参数字符串'a:123/b:456'转换为json对象{a:123, b:456}
             var paramsObject = {};
             if(params && params.indexOf(':') > -1) {
-                params.replace(/(\w+)\s*:\s*([\w-]+)/g, function (param, key, value) {
+                params.replace(/(\w+)\s*:\s*([\w-\[\]\{\},]+)/g, function (param, key, value) {
                     key && (paramsObject[key] = value);
                 });
             }
