@@ -7,7 +7,7 @@ define([
 ], function ($, Backbone, React, Example) {
     "use strict";
 
-    var Page = React.createClass({
+    var View = React.createClass({
         getDefaultProps: function () {
             return {
                 name: 'acelan',
@@ -20,18 +20,25 @@ define([
                 value: 2
             });
         },
-        _changeExample: function () {
+        changeExample: function () {
             this.setProps({
                 name: "efg",
                 value: 3
             });
         },
+        submit: function () {
+            window.location.href = "#home/index";
+        },
         render: function () {
             return (
                 <div>
                     <a href="#home/index/a:1/b:222">return home</a>
-                    <div onClick={this._changeExample}>change example</div>
-                    <Example name={this.props.name} value={this.props.value} />
+                    <div>接收的参数为 {JSON.stringify(this.props.req)} </div>
+                    <form onSubmit={this.submit}>
+                        <div onClick={this.changeExample}>change example</div>
+                        <Example name={this.props.name} value={this.props.value} />
+                        <input type="submit" value="提交"/>
+                    </form>
                 </div>
             );
         }
@@ -40,7 +47,7 @@ define([
 
     return function (params) {
         React.render(
-            <Page/>,
+            <View req={params}/>,
             $("#Main").get(0)
         );
     }
