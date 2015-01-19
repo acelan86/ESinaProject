@@ -1,60 +1,47 @@
 define([
+    "jquery",
     "backbone",
     "react",
-    "lib/UINav/UINav",
+    "lib/ui/Example.react.js",
     "css!styles/group"
-], function (Backbone, React, UINav) {
+], function ($, Backbone, React, Example) {
+    "use strict";
 
-    App.Models.Item = Backbone.Model.extend({});
-
-    App.Collections.Items = Backbone.Collection.extend({
-        model: App.Models.Item
-    });
-    
-
-    App.Views.Group = Backbone.View.extend({
-        el: '#Main',
-        initialize: function (items) {
-            this.items = items;
-            this.render();
+    var Page = React.createClass({
+        getDefaultProps: function () {
+            return {
+                name: 'acelan',
+                value: 1
+            };
         },
-        addHandler: function () {
-            //alert('add');
-            this.items.add([
-                {
-                    name: 'item' + (+new Date()).toString(36)
-                    //link: '#home/index/a:1/b:2'
-                }
-            ]);
+        componentDidMount: function () {
+            this.setProps({
+                name: "abc",
+                value: 2
+            });
         },
-        removeHandler: function (cid) {
-            //alert('add');
-            this.items.remove(cid);
+        _changeExample: function () {
+            this.setProps({
+                name: "efg",
+                value: 3
+            });
         },
-        render: function() {
-            React.render(
+        render: function () {
+            return (
                 <div>
-                    <a href="#home/index/a:1/b:2">return home</a>
-                    <UINav 
-                        onadd={$.proxy(this.addHandler, this)} 
-                        onremove={$.proxy(this.removeHandler, this)} 
-                        items={this.items} />
-                </div>,
-                this.el
+                    <a href="#home/index/a:1/b:222">return home</a>
+                    <div onClick={this._changeExample}>change example</div>
+                    <Example name={this.props.name} value={this.props.value} />
+                </div>
             );
         }
-    })
+    });
+
 
     return function (params) {
-        console.log(params);
-        //模拟数据
-        var items = new App.Collections.Items([
-            {
-                name: 'add'
-                //link: 'http://baidu.com',
-                //blank: true
-            }
-        ]);
-        new App.Views.Group(items);
+        React.render(
+            <Page/>,
+            $("#Main").get(0)
+        );
     }
 });

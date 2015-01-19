@@ -8,7 +8,8 @@ requirejs.config({
         jquery: "lib/jquery/dist/jquery",
         backbone: "lib/backbone/backbone",
         underscore: "lib/underscore/underscore",
-        "react-bootstrap": "lib/react-bootstrap/react-bootstrap"
+        "react.bootstrap": "lib/react-bootstrap/react-bootstrap",
+        "react.backbone.mixin": "lib/backbone-react-component/lib/component"
     },
     shim: {
         jquery : {
@@ -21,7 +22,12 @@ requirejs.config({
         underscore: {
             exports: '_'
         },
-        "react-bootstrap": ["react"]
+        "react.bootstrap": {
+            deps: ["react"]
+        },
+        "react.backbone.mixin": {
+            deps: ["react"]
+        }
     },
     map: {
         "*": {

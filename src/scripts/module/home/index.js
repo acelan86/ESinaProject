@@ -1,4 +1,4 @@
-define(["backbone", "react", "react-bootstrap"], function (Backbone, React, ReactUI) {
+define(["backbone", "react.bootstrap", "react"], function (Backbone, ReactUI, React) {
     "use strict";
 
     var Button = ReactUI.Button,
