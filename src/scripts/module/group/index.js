@@ -2,7 +2,7 @@ define([
     "jquery",
     "backbone",
     "react",
-    "lib/ui/Example.react.js",
+    "lib/components/Example.react.js",
     "css!styles/group"
 ], function ($, Backbone, React, Example) {
     "use strict";

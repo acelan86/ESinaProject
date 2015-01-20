@@ -7,6 +7,7 @@
 requirejs.config({
     paths: {
         "home/index" : "scripts/module/home/index",
-        "group/index" : "scripts/module/group/index"
+        "group/index" : "scripts/module/group/index",
+        "flux/example" : "scripts/module/flux/example"
     }
 });
