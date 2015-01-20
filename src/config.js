@@ -9,7 +9,7 @@ requirejs.config({
         backbone: "lib/backbone/backbone",
         underscore: "lib/underscore/underscore",
         "react.bootstrap": "lib/react-bootstrap/react-bootstrap",
-        "fluxxor": "lib/fluxxor/build/fluxxor.min.js"
+        "fluxxor": "lib/fluxxor/build/fluxxor.min"
     },
     shim: {
         jquery : {
