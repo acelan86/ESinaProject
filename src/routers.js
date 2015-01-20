@@ -8,6 +8,7 @@ requirejs.config({
     paths: {
         "home/index" : "scripts/module/home/index",
         "group/index" : "scripts/module/group/index",
-        "flux/example" : "scripts/module/flux/example"
+        "flux/example" : "scripts/module/flux/example",
+        "flux/fluxxor-example" : "scripts/module/flux/fluxxor-example"
     }
 });
