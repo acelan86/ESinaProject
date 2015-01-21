@@ -15,6 +15,8 @@ define([
 
     /**
      * Store
+     * store bind dispatch name
+     * and file change
      */
     var TodoStore = Fluxxor.createStore({
         initialize: function() {
@@ -22,10 +24,14 @@ define([
 
             this.bindActions(
                 "add-todo", this.onAddTodo,
-                "clear-todos", this.onClearTodos
+                "clear-todos", this.onClearTodos,
+                "init-todos", this.onInitTodo
             );
         },
-
+        onInitTodo: function (payload) {
+            Array.prototype.push.apply(this.todos, payload);
+            this.emit("change");
+        },
         onAddTodo: function(payload) {
             this.todos.push({
                 text: payload.text,
@@ -54,8 +60,15 @@ define([
 
     /**
      * actions
+     * action fire dispatch name
      */
      var actions = {
+        initTodos: function () {
+            $.getJSON("/data/todos.json")
+                .done(function (todos) {
+                    this.dispatch("init-todos", todos);
+                }.bind(this));
+        },
         addTodo: function(text) {
             this.dispatch("add-todo", {text: text});
         },
@@ -71,24 +84,42 @@ define([
     var flux = new Fluxxor.Flux(stores, actions);
 
 
+    /**
+     * view 里面只能触发action的方法
+     * init
+     */
     var View = React.createClass({
+        //配置需要用到的store列表
+        stores: ["TodoStore"],
+        //感觉这些可以自动做，封装一下
         mixins: [
             Fluxxor.FluxMixin(React),
             Fluxxor.StoreWatchMixin("TodoStore")
         ],
+        //必须有，用于将store的内容放到status里面
+        //这步是不是可以通过配置一个store表进行自动操作
+        getStateFromFlux: function() {
+            var state = {},
+                flux = this.getFlux();
+            this.stores.map(function (name) {
+                state[name] = flux.store(name).getState();
+            });
+            return state;
+        },
+        //自动处理结束
+        
         getInitialState: function() {
             return {
                 newTodoText: ""
             };
         },
 
-        getStateFromFlux: function() {
-            var flux = this.getFlux();
-            return flux.store("TodoStore").getState();
+        componentDidMount: function() {
+            this.getFlux().actions.initTodos();
         },
 
         render: function() {
-            var todos = this.state.todos.map(function (todo, i) {
+            var todos = this.state.TodoStore.todos.map(function (todo, i) {
                 return (
                     <li key={i}>
                         <Example name={todo.text} value={todo.text} />

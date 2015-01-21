@@ -9,6 +9,7 @@ requirejs.config({
         "home/index" : "scripts/module/home/index",
         "group/index" : "scripts/module/group/index",
         "flux/example" : "scripts/module/flux/example",
-        "flux/fluxxor-example" : "scripts/module/flux/fluxxor-example"
+        "flux/fluxxor-example" : "scripts/module/flux/fluxxor-example",
+        "flux/delorean-example" : "scripts/module/flux/delorean-example"
     }
 });
