@@ -12,8 +12,9 @@
     "react-bootstrap": "~0.13.2",
     "es5-shim": "~4.0.5",
     "html5shiv": "~3.7.2",
-    "fluxxor": "git@github.com:acelan86/fluxxor.git#master",
-    "delorean": "~0.8.7"
+    "eventEmitter": "~4.2.11",
+    "es6-promise": "~2.0.1",
+    "underscore": "~1.7.0"
   },
   "license": "MIT",
   "ignore": [
