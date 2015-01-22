@@ -85,7 +85,7 @@ define(["../../../lib/AceFlux/Flux.js", "react", "./test.js"], function (Flux, R
             var id = (+new Date()).toString(36);
             dispatcher.addTodo({id: id, text: text, doing: true});
 
-            $.getJSON('/data/todo.json')
+            $.getJSON('/data/todos.json')
                 .done(function () {
                     dispatcher.addTodoSucc(id);
                 })

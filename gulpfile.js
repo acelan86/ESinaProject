@@ -5,7 +5,8 @@ var paths = {
     src: "src",
     dist: "dist",
     dev: "dev",
-    tmp: "tmp"
+    tmp: "tmp",
+    routerMap: "routerMap.json"
 };
 
 var port = 8888;
@@ -144,8 +145,16 @@ gulp.task("optimize_js", ["usemin"], function () {
         .pipe(gulp.dest(paths.tmp));
 });
 
+//remove routerMap.json
+gulp.task("rm_routermap", ["dev2tmp"], function () {
+    var clean = require("gulp-clean");
+    return gulp.src(paths.tmp + "/" + paths.routerMap, {read: false})
+        .pipe(clean({
+            force: true 
+        }));
+});
 //3. reval md5 files  tmp -> dist
-gulp.task("rev", ["optimize_image", "optimize_js"], function () {
+gulp.task("rev", ["optimize_image", "optimize_js", "rm_routermap"], function () {
     var revall = require("gulp-rev-all");
 
     return gulp.src(paths.tmp + "/**")
@@ -156,7 +165,7 @@ gulp.task("rev", ["optimize_image", "optimize_js"], function () {
         }))
         .pipe(gulp.dest(paths.dist))
         .pipe(revall.manifest({
-            fileName: 'routerMap.json'
+            fileName: paths.routerMap
         }))
         .pipe(gulp.dest(paths.dist));
 });
@@ -177,22 +186,4 @@ gulp.task("package", ["rev"], function () {
  */
 gulp.task("default", ["compile"], function () {
     //gulp.watch(["src/**"], ["compile"]);
-});
-
-
-
-/**
- * some test rev
- */
-gulp.task("revtest", function () {
-    var revall = require("gulp-rev-all");
-    gulp.src("rev/**")
-        .pipe(revall({
-            ignore: [".html"],
-            silent: true
-            //,prefix: 'http://cdn.cn/static'
-        }))
-        .pipe(gulp.dest("rev-result"))
-        .pipe(revall.manifest())
-        .pipe(gulp.dest("rev-result"));
 });
