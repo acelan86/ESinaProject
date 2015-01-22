@@ -6,11 +6,11 @@
  */
 requirejs.config({
     paths: {
-        "scripts/module/home/index" : "scripts/module/home/index",
-        "scripts/module/group/index" : "scripts/module/group/index",
-        "scripts/module/flux/example" : "scripts/module/flux/example",
-        "scripts/module/flux/fluxxor-example" : "scripts/module/flux/fluxxor-example",
-        "scripts/module/flux/delorean-example" : "scripts/module/flux/delorean-example",
-        "scripts/module/flux/testRelativePath" : "scripts/module/flux/testRelativePath"
+        "home/index" : "scripts/module/home/index",
+        "group/index" : "scripts/module/group/index",
+        "flux/example" : "scripts/module/flux/example",
+        "flux/fluxxor-example" : "scripts/module/flux/fluxxor-example",
+        "flux/delorean-example" : "scripts/module/flux/delorean-example",
+        "flux/testRelativePath" : "scripts/module/flux/testRelativePath"
     }
 });

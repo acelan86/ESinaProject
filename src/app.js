@@ -29,7 +29,8 @@ define([
 
             //加载module目录下对应的模块， 并将参数传递至对应模块
             require([
-                ['scripts', 'module', module, action].join('/')
+                //['scripts', 'module', module, action].join('/')
+                [module, action].join('/')
             ], function (actionInitiator) {
                 if('function' === typeof actionInitiator) {
                     actionInitiator(paramsObject);
