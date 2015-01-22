@@ -8,3 +8,6 @@ npm-debug.log
 
 tmp/
 .bowerrc
+
+rev/
+rev-result/

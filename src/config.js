@@ -9,8 +9,6 @@ requirejs.config({
         backbone: "lib/backbone/backbone",
         underscore: "lib/underscore/underscore",
         "react.bootstrap": "lib/react-bootstrap/react-bootstrap",
-        "fluxxor": "lib/fluxxor/build/fluxxor",
-        "delorean": "lib/delorean/dist/delorean.amd",
         "eventEmitter": "lib/eventEmitter/EventEmitter",
         "promise": "lib/es6-promise/promise"
     },

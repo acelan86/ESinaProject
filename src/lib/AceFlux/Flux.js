@@ -1,4 +1,4 @@
-define(["./Dispatcher.js", "./Store", "./utils", "./mixins"], function (Dispatcher, Store, utils, mixins) {
+define(["./Dispatcher.js", "./Store.js", "./utils.js", "./mixins.js"], function (Dispatcher, Store, utils, mixins) {
     "use strict";
 
   var Flux = {

@@ -1,4 +1,4 @@
-define(["./utils", "eventEmitter"], function (utils, EventEmitter) {
+define(["./utils.js", "eventEmitter"], function (utils, EventEmitter) {
     "use strict";
 
     function Store(store, args) {

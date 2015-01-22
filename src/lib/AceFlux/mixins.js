@@ -1,4 +1,4 @@
-define(["./utils"], function (utils) {
+define(["./utils.js"], function (utils) {
    "use strict";
 
    return {

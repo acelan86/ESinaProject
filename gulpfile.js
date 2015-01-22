@@ -151,8 +151,8 @@ gulp.task("rev", ["optimize_image", "optimize_js"], function () {
     return gulp.src(paths.tmp + "/**")
         .pipe(revall({
             ignore: ['.html'],
-            silent: true,
-            //prefix: "http://localhost:8888/dist"
+            silent: true
+            ,prefix: "http://localhost:8888/dist"
         }))
         .pipe(gulp.dest(paths.dist))
         .pipe(revall.manifest())
@@ -175,4 +175,22 @@ gulp.task("package", ["rev"], function () {
  */
 gulp.task("default", ["compile"], function () {
     //gulp.watch(["src/**"], ["compile"]);
+});
+
+
+
+/**
+ * some test rev
+ */
+gulp.task("revtest", function () {
+    var revall = require("gulp-rev-all");
+    gulp.src("rev/**")
+        .pipe(revall({
+            ignore: [".html"],
+            silent: true
+            //,prefix: 'http://cdn.cn/static'
+        }))
+        .pipe(gulp.dest("rev-result"))
+        .pipe(revall.manifest())
+        .pipe(gulp.dest("rev-result"));
 });

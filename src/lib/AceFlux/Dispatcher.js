@@ -1,4 +1,4 @@
-define(["promise", "eventEmitter", "./Store"], function (es6, EventEmitter, Store) {
+define(["promise", "eventEmitter", "./Store.js"], function (es6, EventEmitter, Store) {
     "use strict";
 
     // ### Dispatcher Helpers
