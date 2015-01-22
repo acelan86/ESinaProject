@@ -37,8 +37,14 @@
     <script src="routers.js"></script>
     <!-- endbuild -->
     <script>
-        require(["./app.js"], function (app) {
-            app.run();
+        require(["jquery", "./app.js"], function ($, app) {
+            $.getJSON("./routerMap.json")
+                .done(function (routers) {
+                    app.run(routers);
+                })
+                .fail(function () {
+                    app.run();
+                });
         });
     </script>
 </body>

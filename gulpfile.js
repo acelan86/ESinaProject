@@ -152,10 +152,12 @@ gulp.task("rev", ["optimize_image", "optimize_js"], function () {
         .pipe(revall({
             ignore: ['.html'],
             silent: true
-            ,prefix: "http://localhost:8888/dist"
+            //,prefix: "http://localhost:8888/dist"
         }))
         .pipe(gulp.dest(paths.dist))
-        .pipe(revall.manifest())
+        .pipe(revall.manifest({
+            fileName: 'routerMap.json'
+        }))
         .pipe(gulp.dest(paths.dist));
 });
 

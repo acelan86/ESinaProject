@@ -5,8 +5,15 @@
 define([
     "require",
     "backbone"
-], function(require, Backbone) {
+], function(require, Backbone, routerMap) {
     "use strict";
+
+    function _getRevModulePath(module, action) {
+        var prefix = "scripts/module";
+        var oriModulePath = [prefix, module, action].join('/');
+        var path = window.App.routerMap[oriModulePath + ".js"];
+        return path ? path.slice(1).replace(/\.js$/, '') : oriModulePath;
+    }
 
     //全局路由配置
     var autoRouter = Backbone.Router.extend({
@@ -30,7 +37,7 @@ define([
             //加载module目录下对应的模块， 并将参数传递至对应模块
             require([
                 //['scripts', 'module', module, action].join('/')
-                [module, action].join('/')
+                _getRevModulePath(module, action)
             ], function (actionInitiator) {
                 if('function' === typeof actionInitiator) {
                     actionInitiator(paramsObject);
@@ -45,7 +52,8 @@ define([
         Models: {},  
         Views: {},  
         Collections: {},
-        initialize: function() {
+        initialize: function(routerMap) {
+            window.App.routerMap = routerMap || {};
             new autoRouter();
             Backbone.history.start();
         }  
