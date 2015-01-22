@@ -1,4 +1,4 @@
-define(["lib/AceFlux/Flux", "react"], function (Flux, React) {
+define(["../../../lib/AceFlux/Flux", "react"], function (Flux, React) {
     
     /**
      * Store
