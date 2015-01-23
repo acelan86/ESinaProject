@@ -64,6 +64,14 @@ gulp.task("clean_dist", function () {
         }));
 });
 
+gulp.task("clean_routers", function () {
+    var clean = require("gulp-clean");
+    return gulp.src(paths.tmp + "/" + paths.routers, {read: false})
+        .pipe(clean({
+            force: true
+        }));
+});
+
 gulp.task("clean", ["clean_dev", "clean_dist", "clean_tmp"]);
 
 
@@ -144,7 +152,7 @@ gulp.task("optimize_image", ["usemin"], function () {
         }))
         .pipe(gulp.dest(paths.tmp));
 });
-gulp.task("optimize_js", ["usemin"], function () {
+gulp.task("optimize_js", ["usemin", "clean_routers"], function () {
     var uglify = require("gulp-uglify");
 
     return gulp.src(paths.tmp + "/**/*.js")
