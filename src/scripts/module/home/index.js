@@ -124,7 +124,7 @@ define(["backbone", "react.bootstrap", "react"], function (Backbone, ReactUI, Re
         var hc = new App.Collections.Home();
         hc.add([
             {'name': 'home', 'link': '#home/index/a:moduleA/other:nothing'},
-            {'name': 'group', 'link': '#group/index'}
+            {'name': 'group', 'link': '#flux/ace-example'}
         ]);
         new App.Views.Home(hc);
     }

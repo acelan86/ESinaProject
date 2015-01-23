@@ -152,7 +152,7 @@ gulp.task("optimize_image", ["usemin"], function () {
         }))
         .pipe(gulp.dest(paths.tmp));
 });
-gulp.task("optimize_js", ["usemin", "clean_routers"], function () {
+gulp.task("optimize_js", ["usemin"], function () {
     var uglify = require("gulp-uglify");
 
     return gulp.src(paths.tmp + "/**/*.js")
@@ -164,7 +164,7 @@ gulp.task("optimize_js", ["usemin", "clean_routers"], function () {
 gulp.task("rev", ["optimize_image", "optimize_js"], function () {
     var revall = require("gulp-rev-all");
 
-    return gulp.src(paths.tmp + "/**")
+    return gulp.src([paths.tmp + "/**", "!" + paths.tmp + "/" + paths.routers])
         .pipe(revall(revallConfig))
         .pipe(gulp.dest(paths.dist))
         .pipe(revall.manifest({
