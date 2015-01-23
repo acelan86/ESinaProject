@@ -1,6 +1,6 @@
 # ESinaProject
 
-a set use requirejs(amd) + backbone(router & model) + reactjs(ui) + bootstrap(css)
+a set use requirejs(amd) + backbone(router) + Flux(undirection data flow) + reactjs(ui) + bootstrap(css)
 
 
 ## get 
