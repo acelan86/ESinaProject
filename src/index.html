@@ -35,12 +35,10 @@
     <script src="lib/requirejs/require.js"></script>
     <script src="config.js"></script>
     <!-- endbuild -->
+    <script src="./routers.js"></script>
     <script>
-        require(["jquery", "./app.js"], function ($, app) {
-            $.getJSON("./routerMap.json")
-                .done(function (routers) {
-                    app.run(routers);
-                });
+        require(["./app.js"], function (app) {
+            app.run();
         });
     </script>
 </body>

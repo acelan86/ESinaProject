@@ -10,6 +10,12 @@ var paths = {
     routers: "routers.js"
 };
 
+var revallConfig = {
+    ignore: [".html"],
+    silent: true
+    ,prefix: "http://localhost:8888/dist"
+};
+
 var port = 8888;
 
 /**
@@ -146,39 +152,12 @@ gulp.task("optimize_js", ["usemin"], function () {
         .pipe(gulp.dest(paths.tmp));
 });
 
-//rev-manifest.json -> routers.js (给应用使用)
-gulp.task("build_routers", function () {
-    var through = require('through2');
-
-    function build(options) {
-        var options = options || {};
-        return through.obj(function (cb) {
-
-                this.push(new gutil.File({
-                        path: path.join(firstFile.base, fileName),
-                        contents: new Buffer(JSON.stringify(manifest, null, '  '))
-                    }));
-                }
-                cb();
-
-            });
-        };
-    }
-
-    return gulp.src(paths.dist + "/" + paths.revmanifest)
-        .pipe(build())
-        .pipe(gulp.dest(paths.dist + "/" + paths.routers))
-});
 //3. reval md5 files  tmp -> dist
 gulp.task("rev", ["optimize_image", "optimize_js"], function () {
     var revall = require("gulp-rev-all");
 
     return gulp.src(paths.tmp + "/**")
-        .pipe(revall({
-            ignore: ['.html'],
-            silent: true
-            //,prefix: "http://localhost:8888/dist"
-        }))
+        .pipe(revall(revallConfig))
         .pipe(gulp.dest(paths.dist))
         .pipe(revall.manifest({
             fileName: paths.revmanifest
@@ -186,16 +165,67 @@ gulp.task("rev", ["optimize_image", "optimize_js"], function () {
         .pipe(gulp.dest(paths.dist));
 });
 
+//rev-manifest.json -> routers.js (给应用使用)
+gulp.task("build_routers", ["rev"], function () {
+    var through = require('through2');
+    var patho = require('path');
+    var revall = require("gulp-rev-all");
+
+    function build(options) {
+        var options = options || {};
+        var fileName = options.fileName || "routers.js";
+        var prefix = options.prefix || "scripts/module/";
+
+
+        return through.obj(
+            //filter routers -> routers.js
+            function (file, encoding, callback) {
+                var filePath = file.path;
+                var cwd = file.cwd;
+
+                var revmap = JSON.parse(file.contents.toString()),
+                    result = {},
+                    replaceRegx = new RegExp('^' + prefix.replace(/\//g, '\\/'));
+                for (var path in revmap) {
+                    //以scripts/module开头的约定为路由规则
+                    if (0 === path.indexOf(prefix)) {
+                        result[path.replace(replaceRegx, '').replace(/\.js$/, '')] = revmap[path].slice(1).replace(/\.js/, '');
+                    }
+                }
+                this.push(new gutil.File({
+                    cwd: file.cwd,
+                    base: file.base,
+                    path: patho.join(file.base, fileName),
+                    contents: new Buffer('window._APP_ROUTER_MAP = ' + JSON.stringify(result) + ";")
+                }));
+                callback();
+            }
+        );
+    }
+
+    return gulp.src(paths.dist + "/" + paths.revmanifest)
+        .pipe(build())
+        .pipe(gulp.dest(paths.tmp));
+});
+
+//rev agains, so dirty~
+gulp.task("rev_routers", ["build_routers"], function () {
+    var revall = require("gulp-rev-all");
+
+    return gulp.src([paths.tmp + "/" + paths.routers, paths.tmp + "/**/*.html"])
+        .pipe(revall(revallConfig))
+        .pipe(gulp.dest(paths.dist));
+});
+
 //4. clean tmp
-gulp.task("package", ["rev"], function () {
-    var clean = require("gulp-clean");
+gulp.task("deploy", ["rev_routers"], function () {
+     var clean = require("gulp-clean");
 
     return gulp.src(paths.tmp, {read: false})
         .pipe(clean({
-            force: true
+            force: true 
         }));
 });
-
 
 /**
  * alias

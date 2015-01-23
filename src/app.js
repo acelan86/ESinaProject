@@ -9,10 +9,9 @@ define([
     "use strict";
 
     function _getRevModulePath(module, action) {
-        var prefix = "scripts/module";
-        var oriModulePath = [prefix, module, action].join('/');
-        var path = window.App.routerMap[oriModulePath + ".js"];
-        return path ? path.slice(1).replace(/\.js$/, '') : oriModulePath;
+        var map = window._APP_ROUTER_MAP || {};
+        var oriModulePath = [module, action].join('/');
+        return map[oriModulePath] || ["scripts", "module", oriModulePath].join('/');
     }
 
     //全局路由配置
@@ -35,10 +34,7 @@ define([
             }
 
             //加载module目录下对应的模块， 并将参数传递至对应模块
-            require([
-                //['scripts', 'module', module, action].join('/')
-                _getRevModulePath(module, action)
-            ], function (actionInitiator) {
+            require([_getRevModulePath(module, action)], function (actionInitiator) {
                 if('function' === typeof actionInitiator) {
                     actionInitiator(paramsObject);
                 }
