@@ -6,7 +6,8 @@ var paths = {
     dist: "dist",
     dev: "dev",
     tmp: "tmp",
-    routerMap: "routerMap.json"
+    revmanifest: "rev-manifest.json",
+    routers: "routers.js"
 };
 
 var port = 8888;
@@ -145,16 +146,31 @@ gulp.task("optimize_js", ["usemin"], function () {
         .pipe(gulp.dest(paths.tmp));
 });
 
-//remove routerMap.json
-gulp.task("rm_routermap", ["dev2tmp"], function () {
-    var clean = require("gulp-clean");
-    return gulp.src(paths.tmp + "/" + paths.routerMap, {read: false})
-        .pipe(clean({
-            force: true 
-        }));
+//rev-manifest.json -> routers.js (给应用使用)
+gulp.task("build_routers", function () {
+    var through = require('through2');
+
+    function build(options) {
+        var options = options || {};
+        return through.obj(function (cb) {
+
+                this.push(new gutil.File({
+                        path: path.join(firstFile.base, fileName),
+                        contents: new Buffer(JSON.stringify(manifest, null, '  '))
+                    }));
+                }
+                cb();
+
+            });
+        };
+    }
+
+    return gulp.src(paths.dist + "/" + paths.revmanifest)
+        .pipe(build())
+        .pipe(gulp.dest(paths.dist + "/" + paths.routers))
 });
 //3. reval md5 files  tmp -> dist
-gulp.task("rev", ["optimize_image", "optimize_js", "rm_routermap"], function () {
+gulp.task("rev", ["optimize_image", "optimize_js"], function () {
     var revall = require("gulp-rev-all");
 
     return gulp.src(paths.tmp + "/**")
@@ -165,7 +181,7 @@ gulp.task("rev", ["optimize_image", "optimize_js", "rm_routermap"], function () 
         }))
         .pipe(gulp.dest(paths.dist))
         .pipe(revall.manifest({
-            fileName: paths.routerMap
+            fileName: paths.revmanifest
         }))
         .pipe(gulp.dest(paths.dist));
 });
