@@ -9,31 +9,32 @@ define(["react"], function (React) {
         },
         getInitialState: function () {
             return {
-                all: [],
                 lefts: [],
                 rights: []
             };
         },
-
-        componentDidMount: function () {
-            var lr = this._getLeftRightfromDatasource();
-            var all = this.props.datasource.map(function (row, i) {
+        //首次挂载时调用
+        componentWillMount: function () {
+            this.props.datasource.map(function (row, i) {
                 row.__uid = i;
-                return row;
             });
-
-            this.setState({
-                all : all,
-                lefts: lr.lefts,
-                rights: lr.rights
+            this.setState(this._getLeftRightfromDatasource());
+        },
+        //当再次接收到属性变化时调用
+        //this.props里面存储的为旧属性
+        //newProps中为新属性
+        componentWillReceiveProps: function (newProps) {
+            newProps.datasource.map(function (row, i) {
+                row.__uid = i;
             });
+            this.setState(this._getLeftRightfromDatasource());
         },
 
         _find: function (id) {
             var i = 0,
                 row,
                 result = {};
-            this.state.all.map(function (row, i) {
+            this.props.datasource.map(function (row, i) {
                 if (row.__uid === id) {
                     result = row;
                     return false;
@@ -46,7 +47,7 @@ define(["react"], function (React) {
             var lefts = [];
             var rights = [];
 
-            this.state.all.map(function (row) {
+            this.props.datasource.map(function (row) {
                 if (row.selected) {
                     rights.push(row);
                 } else {
