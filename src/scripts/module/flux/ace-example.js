@@ -5,8 +5,11 @@ define(["../../../lib/AceFlux/Flux.js", "react", "./test.js"], function (Flux, R
      */
     var Store = Flux.createStore({
         data: [],
+        clearTodos: function () {
+            this.data = [];
+        },
         initTodos: function (data) {
-            Array.prototype.push.apply(this.data, data);
+            this.data = data;
             this.emit('change');
         },
         addTodo: function (data) {
@@ -35,7 +38,8 @@ define(["../../../lib/AceFlux/Flux.js", "react", "./test.js"], function (Flux, R
             'init-todos': 'initTodos',
             'add-todo': 'addTodo',
             'add-todo-succ': 'addTodoSucc',
-            'add-todo-fail': 'addTodoFail'
+            'add-todo-fail': 'addTodoFail',
+            'clear-todos': 'clearTodos'
         },
 
         getState: function () {
@@ -63,6 +67,9 @@ define(["../../../lib/AceFlux/Flux.js", "react", "./test.js"], function (Flux, R
         addTodoFail: function (id) {
             this.dispatch('add-todo-fail', id);
         },
+        clearTodos: function (data) {
+            this.dispatch('clear-todos');
+        },
         getStores: function () {
             return {
                 store: store
@@ -75,8 +82,8 @@ define(["../../../lib/AceFlux/Flux.js", "react", "./test.js"], function (Flux, R
      * Action
      */
     var actions = {
-        initTodos: function () {
-            $.getJSON('/data/todos.json')
+        initTodos: function (id) {
+            $.getJSON('/data/todos.json', {id: id})
                 .done(function (data) {
                     dispatcher.initTodos(data);
                 });
@@ -92,6 +99,9 @@ define(["../../../lib/AceFlux/Flux.js", "react", "./test.js"], function (Flux, R
                 .fail(function () {
                     dispatcher.addTodoFail(id);
                 });
+        },
+        clearTodos: function () {
+            dispatcher.clearTodos();
         }
     };
 
@@ -105,8 +115,9 @@ define(["../../../lib/AceFlux/Flux.js", "react", "./test.js"], function (Flux, R
                 newTodoText: ""
             };
         },
+        //首次渲染view
         componentDidMount: function () {
-            actions.initTodos();
+            actions.initTodos(this.props.params.todoid);
         },
 
         handleTodoTextChange: function(e) {
@@ -148,9 +159,10 @@ define(["../../../lib/AceFlux/Flux.js", "react", "./test.js"], function (Flux, R
         }
     });
 
-    return function () {
+    return function (params) {
+        //渲染view
         React.render(
-            <View dispatcher={dispatcher}/>,
+            <View dispatcher={dispatcher} params={params}/>,
             document.getElementById('Main')
         );
     };

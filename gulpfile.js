@@ -13,7 +13,7 @@ var paths = {
 var revallConfig = {
     ignore: [".html"],
     silent: true
-    ,prefix: "http://localhost:8888/dist"
+    //,prefix: "http://localhost:8888/dist"
 };
 
 var port = 8888;

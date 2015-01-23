@@ -5,7 +5,7 @@
 define([
     "require",
     "backbone"
-], function(require, Backbone, routerMap) {
+], function(require, Backbone) {
     "use strict";
 
     function _getRevModulePath(module, action) {

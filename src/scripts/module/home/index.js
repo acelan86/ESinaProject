@@ -51,23 +51,10 @@ define(["backbone", "react.bootstrap", "react"], function (Backbone, ReactUI, Re
         }
     });
 
-
-    App.Models.Home = Backbone.Model.extend({});
-
-    App.Collections.Home = Backbone.Collection.extend({
-        model: App.Models.Home
-    });
-
-    App.Views.Home = Backbone.View.extend({
-        el: '#Main',
-        initialize: function(c) {
-            this.Collections = c;
-            this.render();
-        },
-        render: function() {
-            React.render(
+    var View = React.createClass({
+        render: function () {
+            return (
                 <div>
-                    <a href="#group/index/j:1/k:2/c:abc/d:[xyz,abc]">group</a>
                     <Button bsStyle="primary">Default button</Button>
                     <Button>Default button</Button>
                     <Alert bsStyle="warning">
@@ -112,20 +99,13 @@ define(["backbone", "react.bootstrap", "react"], function (Backbone, ReactUI, Re
                     <ProgressBar bsStyle="info" now={20} />
                     <ProgressBar bsStyle="warning" now={60} />
                     <ProgressBar bsStyle="danger" now={80} />
-                </div>,
-                this.el
+                </div>
             );
         }
-    })
+    });
 
     return function (params) {
         console.log(params);
-        //模拟数据
-        var hc = new App.Collections.Home();
-        hc.add([
-            {'name': 'home', 'link': '#home/index/a:moduleA/other:nothing'},
-            {'name': 'group', 'link': '#flux/ace-example'}
-        ]);
-        new App.Views.Home(hc);
+        React.render(<View/>, document.getElementById("Main"));
     }
 });
