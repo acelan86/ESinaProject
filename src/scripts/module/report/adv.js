@@ -1,6 +1,7 @@
 define([
-    "../../../lib/AceFlux/Flux.js",
-    "react", "lib/components/Table",
+    "flux",
+    "react",
+    "lib/components/Table",
     "lib/components/MultiSelectList"
 ], function (
     Flux,
