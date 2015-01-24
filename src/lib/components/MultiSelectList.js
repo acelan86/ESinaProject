@@ -1,4 +1,8 @@
-define(["react"], function (React) {
+define([
+    "react"
+], function (
+    React
+) {
     "use strict";
 
     var MultiSelectList = React.createClass({
@@ -18,7 +22,7 @@ define(["react"], function (React) {
             this.props.datasource.map(function (row, i) {
                 row.__uid = i;
             });
-            this.setState(this._getLeftRightfromDatasource());
+            this.setState(this._getLeftRightfromProps(this.props));
         },
         //当再次接收到属性变化时调用
         //this.props里面存储的为旧属性
@@ -27,7 +31,7 @@ define(["react"], function (React) {
             newProps.datasource.map(function (row, i) {
                 row.__uid = i;
             });
-            this.setState(this._getLeftRightfromDatasource());
+            this.setState(this._getLeftRightfromProps(newProps));
         },
 
         _find: function (id) {
@@ -43,11 +47,11 @@ define(["react"], function (React) {
             return result;
         },
 
-        _getLeftRightfromDatasource: function () {
+        _getLeftRightfromProps: function (props) {
             var lefts = [];
             var rights = [];
 
-            this.props.datasource.map(function (row) {
+            props.datasource.map(function (row) {
                 if (row.selected) {
                     rights.push(row);
                 } else {
@@ -62,12 +66,16 @@ define(["react"], function (React) {
 
         handleSelect: function (id) {
             this._find(id).selected = 1;
-            this.setState(this._getLeftRightfromDatasource());
+            this.setState(this._getLeftRightfromProps(this.props));
         },
 
         handleUnselect: function (id) {
             this._find(id).selected = 0;
-            this.setState(this._getLeftRightfromDatasource());
+            this.setState(this._getLeftRightfromProps(this.props));
+        },
+
+        val: function () {
+            return this.state.rights;
         },
 
         render: function () {

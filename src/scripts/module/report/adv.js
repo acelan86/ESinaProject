@@ -1,4 +1,13 @@
-define(["../../../lib/AceFlux/Flux.js", "react", "lib/components/Table", "lib/components/MultiSelectList"], function (Flux, React, Table, MultiSelectList) {
+define([
+    "../../../lib/AceFlux/Flux.js",
+    "react", "lib/components/Table",
+    "lib/components/MultiSelectList"
+], function (
+    Flux,
+    React,
+    Table,
+    MultiSelectList
+) {
     
     /**
      * Store
@@ -25,6 +34,23 @@ define(["../../../lib/AceFlux/Flux.js", "react", "lib/components/Table", "lib/co
     });
     var listStore = new ListStore();
 
+    var SelectListStore = Flux.createStore({
+        data: [],
+        getState: function () {
+            return {
+                selectlist: this.data
+            };
+        },
+        fill: function (data) {
+            this.data = data;
+            this.emit("change");
+        },
+        actions: {
+            "render-select": "fill"
+        }
+    });
+    var selectlist = new SelectListStore();
+
 
     /*
      * Dispatcher
@@ -33,10 +59,14 @@ define(["../../../lib/AceFlux/Flux.js", "react", "lib/components/Table", "lib/co
         render: function (data) {
             this.dispatch('render', data);
         },
+        renderSelect: function (data) {
+            this.dispatch('render-select', data);
+        },
         getStores: function () {
             return {
-                list: listStore
-            }
+                list: listStore,
+                selectlist: selectlist
+            };
         }
     });
 
@@ -53,6 +83,15 @@ define(["../../../lib/AceFlux/Flux.js", "react", "lib/components/Table", "lib/co
         }
     };
 
+    var selectaction = {
+        fetch: function (id) {
+            $.getJSON('/data/select.json', {id: id})
+                .done(function (data) {
+                    dispatcher.renderSelect(data);
+                });
+        }
+    };
+
     /**
      * View
      */
@@ -61,9 +100,13 @@ define(["../../../lib/AceFlux/Flux.js", "react", "lib/components/Table", "lib/co
         //首次渲染view
         componentDidMount: function () {
             actions.fetch(this.props.params.id);
+            selectaction.fetch(this.props.params.id);
         },
         handleRefreshList: function () {
             actions.fetch(this.props.params.id);
+        },
+        handleGetSelection: function () {
+            console.log(this.refs.mulitselectlist.val());
         },
         render: function () {
             var fields = [
@@ -72,17 +115,12 @@ define(["../../../lib/AceFlux/Flux.js", "react", "lib/components/Table", "lib/co
                 {name: "age", field: "age"}
             ];
 
-            var lists = [
-                {text: "列表1", selected: 1},
-                {text: "列表2"},
-                {text: "列表3"}
-            ];
-
             return (
                 <div>
                     <input type="button" value="refresh" onClick={this.handleRefreshList}/>
                     <Table fields={fields} datasource={this.getStore('list').list} />
-                    <MultiSelectList datasource={lists} />
+                    <MultiSelectList ref="mulitselectlist" datasource={this.getStore('selectlist').selectlist} />
+                    <input type="button" value="get selection" onClick={this.handleGetSelection} />
                 </div>
             );
         }

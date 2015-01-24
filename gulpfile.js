@@ -241,3 +241,20 @@ gulp.task("deploy", ["rev_routers"], function () {
 gulp.task("default", ["compile"], function () {
     //gulp.watch(["src/**"], ["compile"]);
 });
+
+
+// test browserify
+gulp.task('browserify', function() {
+    var browserify = require("gulp-browserify");
+    var jsx = require("gulp-react");
+
+    gulp.src('src/lib/Flux/**.js')
+        .pipe(jsx({
+            harmony: true
+        }))
+        .pipe(browserify({
+            //insertGlobals : true,
+            debug : true
+        }))
+        .pipe(gulp.dest(paths.tmp))
+});
