@@ -1,4 +1,4 @@
-define(["../../../lib/AceFlux/Flux.js", "react", "./test.js"], function (Flux, React, test) {
+define(["flux", "react"], function (Flux, React) {
     
     /**
      * Store
