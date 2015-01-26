@@ -14,7 +14,7 @@
     "html5shiv": "~3.7.2",
     "underscore": "~1.7.0",
     "ace-flux": "git@github.com:acelan86/AceFlux.git",
-    "fluxxor": "~1.5.1"
+    "fluxxor": "git@github.com:acelan86/fluxxor.git#master"
   },
   "license": "MIT",
   "ignore": [

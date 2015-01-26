@@ -20,6 +20,9 @@ define([
         fill: function (data) {
             this.data = data;
             this.emit("change");
+        },
+        getState: function () {
+            return this.data;
         }
     });
 
@@ -31,6 +34,9 @@ define([
         fill: function (data) {
             this.data = data;
             this.emit("change");
+        },
+        getState: function () {
+            return this.data;
         }
     });
 
@@ -63,15 +69,8 @@ define([
     var View = React.createClass({
         mixins:[
             Fluxxor.FluxMixin(React),
-            Fluxxor.StoreWatchMixin("select", "table")
+            Fluxxor.StoreWatchMixin()
         ],
-        getStateFromFlux: function () {
-            var flux = this.getFlux();
-            return {
-                select: flux.store("select").data,
-                table: flux.store("table").data
-            };
-        },
         componentWillMount: function () {
             var flux = this.getFlux();
             flux.actions.fetchSelect(this.props.params.id);
