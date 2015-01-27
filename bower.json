@@ -13,7 +13,6 @@
     "es5-shim": "~4.0.5",
     "html5shiv": "~3.7.2",
     "underscore": "~1.7.0",
-    "ace-flux": "git@github.com:acelan86/AceFlux.git",
     "fluxxor": "git@github.com:acelan86/fluxxor.git#master"
   },
   "license": "MIT",

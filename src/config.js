@@ -9,9 +9,6 @@ requirejs.config({
         backbone: "lib/backbone/backbone",
         underscore: "lib/underscore/underscore",
         "react.bootstrap": "lib/react-bootstrap/react-bootstrap",
-        "eventEmitter": "lib/eventEmitter/EventEmitter",
-        "promise": "lib/es6-promise/promise",
-        "flux": "lib/ace-flux/dist/Flux",
         "fluxxor": "lib/fluxxor/build/fluxxor"
     },
     shim: {
