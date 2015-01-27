@@ -15,6 +15,6 @@ gulp clean
 
 gulp compile
 
-gulp package
+gulp deploy
 
 gulp connect
