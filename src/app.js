@@ -8,6 +8,29 @@ define([
 ], function(require, Backbone) {
     "use strict";
 
+    //根据module, action获取uid
+    var _getUID = (function () {
+        var cache = {};
+
+        function hash(s) {
+            var hash = 0,
+                i = 0,
+                w;
+
+            for (; !isNaN(w = s.charCodeAt(i++));) {
+                hash = ((hash << 5) - hash) + w;
+                hash = hash & hash;
+            }
+
+            return Math.abs(hash).toString(36);
+        }
+
+        return function (module, action) {
+            var str = [module, action].join('_');
+            return cache[str] || (cache[str] = hash(str), cache[str]);
+        };
+    })();
+
     function _getRevModulePath(module, action) {
         var map = window._APP_ROUTER_MAP || {};
         var oriModulePath = [module, action].join('/');
@@ -32,6 +55,8 @@ define([
                     key && (paramsObject[key] = value);
                 });
             }
+
+            console.log(_getUID(module, action));
 
             //加载module目录下对应的模块， 并将参数传递至对应模块
             require([_getRevModulePath(module, action)], function (actionInitiator) {

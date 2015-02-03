@@ -28,12 +28,29 @@ define([
 
     var TableStore = Fluxxor.createStore({
         initialize: function () {
-            this.data = [];
+            this.data = {
+                order: "desc",
+                orderBy: "id",
+                fields: [],
+                list: []
+            };
             this.bindActions("fetch-table-store", this.fill);
         },
         fill: function (data) {
-            this.data = data;
+            this.data.list = data;
             this.emit("change");
+        },
+        getState: function () {
+            return this.data;
+        }
+    });
+
+    var SearchConditionStore = Fluxxor.createStore({
+        initialize: function () {
+            this.data = {
+                keyword: ''
+            };
+            this.bindActions("search", this.search);
         },
         getState: function () {
             return this.data;
@@ -45,7 +62,8 @@ define([
         //stores
         {
             select: new SelectStore(),
-            table: new TableStore()
+            table: new TableStore(),
+            search: new SearchConditionStore()
         },
         //actions
         {
@@ -90,7 +108,7 @@ define([
             ];
             return (
                 <div>
-                    <input type="button" value="refresh" onClick={this.handleRefreshTable}/>
+                    <input type="button" value="search" onClick={this.handleRefreshTable}/>
                     <Table fields={fields} datasource={this.state.table} />
                     <MultiSelectList ref="mulitselectlist" datasource={this.state.select} />
                     <input type="button" value="get selection" onClick={this.handleGetSelection} />
