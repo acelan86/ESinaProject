@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "cssgrace": "git://github.com/acelan86/cssgrace.git",
-    "gulp": "^3.8.10",
+    "gulp": "git://github.com/gulpjs/gulp#4.0",
     "gulp-bower": "0.0.10",
     "gulp-bower-normalize": "git://github.com/acelan86/gulp-bower-normalize.git",
     "gulp-browserify": "^0.5.1",

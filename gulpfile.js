@@ -23,7 +23,7 @@ var port = 8888;
  */
 
 
-gulp.task("connect", function () {
+gulp.task(function connect() {
     var connect = require("gulp-connect");
     
     connect.server({
@@ -31,7 +31,7 @@ gulp.task("connect", function () {
     });
 });
 
-gulp.task("bowerinstall", function () {
+gulp.task(function bowerinstall() {
     var bower = require("gulp-bower");
 
     return bower();
@@ -39,7 +39,7 @@ gulp.task("bowerinstall", function () {
 /**
  * some clean
  */
-gulp.task("clean_dev", function () {
+gulp.task(function clean_dev() {
     var clean = require("gulp-clean");
 
     return gulp.src(paths.dev, {read: false})
@@ -47,7 +47,7 @@ gulp.task("clean_dev", function () {
             force: true 
         }));
 });
-gulp.task("clean_tmp", function () {
+gulp.task(function clean_tmp() {
     var clean = require("gulp-clean");
 
     return gulp.src(paths.tmp, {read: false})
@@ -55,7 +55,7 @@ gulp.task("clean_tmp", function () {
             force: true 
         }));
 });
-gulp.task("clean_dist", function () {
+gulp.task(function clean_dist() {
     var clean = require("gulp-clean");
 
     return gulp.src(paths.dist, {read: false})
@@ -64,7 +64,7 @@ gulp.task("clean_dist", function () {
         }));
 });
 
-gulp.task("clean_routers", function () {
+gulp.task(function clean_routers() {
     var clean = require("gulp-clean");
     return gulp.src(paths.tmp + "/" + paths.routers, {read: false})
         .pipe(clean({
@@ -72,7 +72,7 @@ gulp.task("clean_routers", function () {
         }));
 });
 
-gulp.task("clean", ["clean_dev", "clean_dist", "clean_tmp"]);
+gulp.task("clean", gulp.parallel("clean_dev", "clean_dist", "clean_tmp"));
 
 
 
@@ -80,13 +80,13 @@ gulp.task("clean", ["clean_dev", "clean_dist", "clean_tmp"]);
  * dev
  */
 //1. src -> dev
-gulp.task("src2dev", ["clean_dev"], function () {
+gulp.task(function src2dev() {
     return gulp.src(paths.src + "/**/*")
         .pipe(gulp.dest(paths.dev));
 });
 
 //2. bower/files -> dev/lib
-gulp.task("bower", ["src2dev", "bowerinstall"], function () {
+gulp.task(function buildBowerFile() {
     var mainBowerFiles = require("main-bower-files");
     var bowerNormalizer = require('gulp-bower-normalize');
 
@@ -104,7 +104,7 @@ gulp.task("bower", ["src2dev", "bowerinstall"], function () {
 });
 
 //3. compile  [react, cssgrace]  dev -> dev
-gulp.task("compile", ["bower"], function () {
+gulp.task(function compile() {
     var jsx = require("gulp-react");
     var jshint = require("gulp-jshint");
 
@@ -117,7 +117,7 @@ gulp.task("compile", ["bower"], function () {
 });
 
 //4、server & watch
-gulp.task("dev", ["compile", "connect"]);
+gulp.task("dev", gulp.series("bowerinstall", "clean_dev", "src2dev", "buildBowerFile", "compile"));
 
 
 /**
@@ -126,13 +126,13 @@ gulp.task("dev", ["compile", "connect"]);
  */
 
 //1. dev -> tmp
-gulp.task("dev2tmp", ["clean_dist", "clean_tmp"], function () {
+gulp.task(function dev2tmp() {
     return gulp.src(paths.dev + "/**/*")
         .pipe(gulp.dest(paths.tmp));
 });
 
 //2. usemin concat files  tmp -> tmp
-gulp.task("usemin", ["dev2tmp"], function () {
+gulp.task(function usemin() {
     var usemin = require("gulp-usemin");
 
     return gulp.src(paths.tmp + "/**/*.html")
@@ -141,7 +141,7 @@ gulp.task("usemin", ["dev2tmp"], function () {
 });
 
 //3. optimizes tmp -> tmp
-gulp.task("optimize_image", ["usemin"], function () {
+gulp.task(function optimize_image() {
     var imagemin = require("gulp-imagemin");
 
     return gulp.src(paths.tmp + "/**/*.{jpg,gif,jpeg,png}")
@@ -152,7 +152,7 @@ gulp.task("optimize_image", ["usemin"], function () {
         }))
         .pipe(gulp.dest(paths.tmp));
 });
-gulp.task("optimize_js", ["usemin"], function () {
+gulp.task(function optimize_js() {
     var uglify = require("gulp-uglify");
 
     return gulp.src(paths.tmp + "/**/*.js")
@@ -161,7 +161,7 @@ gulp.task("optimize_js", ["usemin"], function () {
 });
 
 //3. reval md5 files  tmp -> dist
-gulp.task("rev", ["optimize_image", "optimize_js"], function () {
+gulp.task(function rev() {
     var revall = require("gulp-rev-all");
 
     return gulp.src([paths.tmp + "/**", "!" + paths.tmp + "/" + paths.routers])
@@ -174,7 +174,7 @@ gulp.task("rev", ["optimize_image", "optimize_js"], function () {
 });
 
 //rev-manifest.json -> routers.js (给应用使用)
-gulp.task("build_routers", ["rev"], function () {
+gulp.task(function build_routers() {
     var through = require('through2');
     var patho = require('path');
     var revall = require("gulp-rev-all");
@@ -217,7 +217,7 @@ gulp.task("build_routers", ["rev"], function () {
 });
 
 //rev agains, so dirty~
-gulp.task("rev_routers", ["build_routers"], function () {
+gulp.task(function rev_routers() {
     var revall = require("gulp-rev-all");
 
     return gulp.src([paths.tmp + "/" + paths.routers, paths.tmp + "/**/*.html"])
@@ -226,21 +226,14 @@ gulp.task("rev_routers", ["build_routers"], function () {
 });
 
 //4. clean tmp
-gulp.task("deploy", ["rev_routers"], function () {
-     var clean = require("gulp-clean");
-
-    return gulp.src(paths.tmp, {read: false})
-        .pipe(clean({
-            force: true 
-        }));
-});
+gulp.task("deploy", gulp.series("clean_tmp", "clean_dist", "dev2tmp", "usemin", "optimize_js", "optimize_image", "rev", "build_routers", "rev_routers", "clean_tmp"));
 
 /**
  * alias
  */
-gulp.task("default", ["compile"], function () {
-    //gulp.watch(["src/**"], ["compile"]);
-});
+//gulp.task("default", gulp.parallel("dev", "connect"));
+gulp.task("compile", gulp.series("compile"));
+gulp.task("connect", gulp.series("connect"));
 
 
 // test browserify
