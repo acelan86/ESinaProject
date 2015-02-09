@@ -55,7 +55,7 @@ define([
                     key && (paramsObject[key] = value);
                 });
             }
-
+            
             console.log(_getUID(module, action));
 
             //加载module目录下对应的模块， 并将参数传递至对应模块

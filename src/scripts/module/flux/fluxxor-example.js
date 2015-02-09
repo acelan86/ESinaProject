@@ -118,6 +118,7 @@ define([
     });
 
     return function (params) {
+        console.log(params);
         React.render(
             <View flux={flux} params={params}/>,
             document.getElementById("Main")
