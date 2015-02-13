@@ -231,8 +231,7 @@ gulp.task("deploy", gulp.series("clean_tmp", "clean_dist", "dev2tmp", "usemin", 
 /**
  * alias
  */
-//gulp.task("default", gulp.parallel("dev", "connect"));
-gulp.task("compile", gulp.series("compile"));
+gulp.task("default", gulp.parallel("dev", "connect"));
 gulp.task("connect", gulp.series("connect"));
 
 
