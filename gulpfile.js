@@ -27,7 +27,8 @@ gulp.task(function connect() {
     var connect = require("gulp-connect");
     
     connect.server({
-        port: port
+        port: port,
+        livereload: true
     });
 });
 
@@ -108,18 +109,33 @@ gulp.task(function compile() {
     var jsx = require("gulp-react");
     var jshint = require("gulp-jshint");
 
-    return gulp.src(paths.dev + "/**/*.js")
+    return gulp.src(paths.src + "/**/*.js")
         .pipe(jsx({
             harmony: true
         }))
+        .on('error', function (error) { // 处理react错误，该错误会导致服务终止
+            console.error(error);
+            this.end();
+        })
         .pipe(jshint())
+        .pipe(jshint.reporter('default'))
         .pipe(gulp.dest(paths.dev));
 });
 
 //4、server & watch
-gulp.task("dev", gulp.series("bowerinstall", "clean_dev", "src2dev", "buildBowerFile", "compile"));
+// gulp.task("dev", gulp.series("bowerinstall", "clean_dev", "src2dev", "buildBowerFile", "compile"));
+gulp.task('init', gulp.series("bowerinstall", "clean_dev", "buildBowerFile"));
+gulp.task("dev", gulp.series("src2dev", "compile"));
 
+gulp.task(function livereload () {
+    var connect = require('gulp-connect');
+    gulp.src(paths.dev + '/**/*.html')
+        .pipe(connect.reload());
+});
 
+gulp.task(function watch() {
+    gulp.watch(['src/**/*.js', 'src/**/*.html'], gulp.series('dev', 'livereload'));
+});
 /**
  * package
  * first exec gulp dev
@@ -231,7 +247,7 @@ gulp.task("deploy", gulp.series("clean_tmp", "clean_dist", "dev2tmp", "usemin", 
 /**
  * alias
  */
-gulp.task("default", gulp.parallel("dev", "connect"));
+gulp.task("default", gulp.parallel("dev", "connect", "watch"));
 gulp.task("connect", gulp.series("connect"));
 
 
